@@ -1,0 +1,6 @@
+.git
+.DS_STORE
+dist/
+build/
+node_modules/
+private/
