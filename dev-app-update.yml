@@ -1,0 +1,4 @@
+owner: aplsquared
+repo: electronApp
+provider: github
+updaterCacheDirName: electron-updater

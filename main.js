@@ -46,11 +46,13 @@ app.on('ready', function() {
 });
 
 autoUpdater.on('update-downloaded', (info) => {
-    win.webContents.send('updateReady')
-    alert("Hi");
+  //mainWindow.webContents.send('updateReady')
+  console.log("updated...!");
+  autoUpdater.quitAndInstall();
 });
 
 setTimeout(() => {
+  console.log("timmer...!")
     // autoUpdater
 }, 1000);
 

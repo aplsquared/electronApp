@@ -1,6 +1,6 @@
 {
   "name": "electron",
-  "version": "1.2.0",
+  "version": "1.13.0",
   "description": "A minimal Electron application",
   "main": "main.js",
   "scripts": {
@@ -21,7 +21,7 @@
         "github"
       ],
       "category": "public.app-category.productivity",
-      "target": "dmg"
+      "target": ["dmg", "zip"]
     },
     "win": {
       "publish": [
