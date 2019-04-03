@@ -1,6 +1,6 @@
 {
   "name": "electron",
-  "version": "1.0.4",
+  "version": "1.0.7",
   "description": "A minimal Electron application",
   "main": "main.js",
   "scripts": {
@@ -21,7 +21,10 @@
         "github"
       ],
       "category": "public.app-category.productivity",
-      "target": ["dmg", "zip"]
+      "target": [
+        "dmg",
+        "zip"
+      ]
     },
     "win": {
       "publish": [
@@ -42,6 +45,7 @@
   "license": "CC0-1.0",
   "dependencies": {
     "electron-debug": "^2.1.0",
+    "electron-log": "^3.0.5",
     "electron-updater": "^4.0.6",
     "jquery": "^3.3.1",
     "query-string": "^4.3.2"

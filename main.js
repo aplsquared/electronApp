@@ -2,6 +2,7 @@
 const {app, BrowserWindow, ipcMain} = require('electron')
 
 const {autoUpdater} = require('electron-updater')
+const log = require('electron-log')
 require('electron-debug')({showDevTools: true, enabled: true});
 // autoUpdater.updateConfigPath = path.join(_path to app-update.yml_);
 
@@ -18,6 +19,7 @@ function createWindow () {
       nodeIntegration: true
     }
   })
+  mainWindow.webContents.openDevTools();
 
   // and load the index.html of the app.
   mainWindow.loadFile('index.html')
@@ -40,22 +42,53 @@ function createWindow () {
 
 // app.on('ready', createWindow)
 
+function sendStatusToWindow(text){
+  log.info(text);
+  mainWindow.webContents.send('Message', text);
+}
+
 app.on('ready', function() {
     createWindow()
-    autoUpdater.checkForUpdates();
+    // autoUpdater.checkForUpdates();
+    autoUpdater.checkForUpdatesAndNotify();
 });
 
+// autoUpdater.on('update-downloaded', (info) => {
+//   //mainWindow.webContents.send('updateReady')
+//   console.log("updated...!");
+//   autoUpdater.quitAndInstall();
+// });
+
+
+autoUpdater.on('checking-for-update', () => {
+  sendStatusToWindow('Checking for update...');
+})
+autoUpdater.on('update-available', (info) => {
+  sendStatusToWindow('Update available.');
+})
+autoUpdater.on('update-not-available', (info) => {
+  sendStatusToWindow('Update not available.');
+})
+autoUpdater.on('error', (err) => {
+  sendStatusToWindow('Error in auto-updater. ' + err);
+})
+autoUpdater.on('download-progress', (progressObj) => {
+  let log_message = "Download speed: " + progressObj.bytesPerSecond;
+    log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
+    log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
+  sendStatusToWindow(log_message);
+})
 autoUpdater.on('update-downloaded', (info) => {
-  //mainWindow.webContents.send('updateReady')
-  console.log("updated...!");
-  autoUpdater.quitAndInstall();
+  sendStatusToWindow('Update downloaded');
 });
 
-setTimeout(() => {
-  console.log("timmer...!");
-  autoUpdater.checkForUpdates();
-    // autoUpdater
-}, 2000);
+
+// setTimeout(() => {
+//   console.log("timmer...!");
+//   autoUpdater.checkForUpdates();
+//   sendStatusToWindow('set timeout');
+//     // autoUpdater
+// }, 2000);
 
 // when receiving a quitAndInstall signal, quit and install the new version ;)
 ipcMain.on("quitAndInstall", (event, arg) => {
