@@ -21,8 +21,7 @@
         let version = require('electron').remote.app.getVersion();
         document.getElementById('version').innerText = version;
         function checkV(){
-            alert("hello");
-            alert(version)
+            alert("Version is: " + version);
             document.getElementById('version').innerText = version;
         }
 
@@ -34,7 +33,7 @@
         const ipcRenderer = require('electron').ipcRenderer;
         // wait for an updateReady message
         ipcRenderer.on('updateReady', function(event, text) {
-            alert("New hello")
+            alert("New hello");
             // changes the text of the button
             var container = document.getElementById('ready');
             container.innerHTML = "new version ready!";

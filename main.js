@@ -52,9 +52,10 @@ autoUpdater.on('update-downloaded', (info) => {
 });
 
 setTimeout(() => {
-  console.log("timmer...!")
+  console.log("timmer...!");
+  autoUpdater.checkForUpdates();
     // autoUpdater
-}, 1000);
+}, 2000);
 
 // when receiving a quitAndInstall signal, quit and install the new version ;)
 ipcMain.on("quitAndInstall", (event, arg) => {
